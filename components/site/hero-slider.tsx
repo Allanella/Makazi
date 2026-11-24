@@ -114,10 +114,10 @@ export function HeroSlider({ eyebrow, headline, description }: HeroSliderProps) 
         <p className="hero-description">{description}</p>
 
         <div className="hero-actions">
-          <Link className="button button-accent" href="/donate">
+          <Link className="button button-accent fx-button" href="/donate">
             Support our work <ArrowUpRight aria-hidden="true" />
           </Link>
-          <Link className="button button-ghost" href="/about">
+          <Link className="button button-ghost fx-button" href="/about">
             Discover our story <ArrowUpRight aria-hidden="true" />
           </Link>
         </div>

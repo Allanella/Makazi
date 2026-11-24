@@ -30,7 +30,7 @@ const questions = [
 
 export default function ContactPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" className="fx-page fx-home">
       <PageIntro
         eyebrow="Contact us"
         title="We would love to hear from you."
@@ -39,9 +39,9 @@ export default function ContactPage() {
       />
 
       {/* Contact Details & Inquiry Form */}
-      <section className="section">
+      <section className="section fx-section">
         <div className="container contact-layout">
-          <div className="contact-info">
+          <div className="contact-info fx-reveal fx-left">
             <p className="eyebrow">
               <span /> Contact details
             </p>
@@ -86,16 +86,16 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="form-card">
+          <div className="form-card fx-reveal fx-right">
             <InquiryForm kind="contact" />
           </div>
         </div>
       </section>
 
       {/* Map Section */}
-      <section className="section section-soft map-section">
+      <section className="section section-soft map-section fx-section">
         <div className="container">
-          <div className="section-topline">
+          <div className="section-topline fx-reveal">
             <div>
               <p className="eyebrow">
                 <span /> Find us in Iganga
@@ -127,9 +127,9 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Accordion */}
-      <section className="section">
+      <section className="section fx-section">
         <div className="container faq-layout">
-          <div>
+          <div className="fx-reveal fx-left">
             <p className="eyebrow">
               <span /> Frequently asked
             </p>
@@ -139,7 +139,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="faq-list">
+          <div className="faq-list fx-reveal fx-right">
             {questions.map(({ question, answer }) => (
               <details className="faq-item" key={question}>
                 <summary className="faq-question">
@@ -156,20 +156,22 @@ export default function ContactPage() {
       </section>
 
       {/* Direct Contact Strip */}
-      <section className="cta-band">
+      <section className="cta-band fx-cta">
+        <span className="fx-blob fx-blob-b" aria-hidden="true" />
+        <span className="fx-blob fx-blob-c" aria-hidden="true" />
         <div className="container cta-band-inner">
-          <div>
+          <div className="fx-reveal fx-left">
             <p className="eyebrow eyebrow-light">
               <span /> Direct reach
             </p>
             <h2>Prefer direct contact?</h2>
             <p>Reach out to our team by email or telephone during working hours.</p>
           </div>
-          <div className="cta-actions">
-            <a className="button button-accent" href={`mailto:${organization.email}`}>
+          <div className="cta-actions fx-reveal fx-right">
+            <a className="button button-accent fx-button" href={`mailto:${organization.email}`}>
               Email MAKAZI <ArrowUpRight aria-hidden="true" />
             </a>
-            <a className="button button-ghost" href={`tel:${organization.phoneHref}`}>
+            <a className="button button-ghost fx-button" href={`tel:${organization.phoneHref}`}>
               Call {organization.phone}
             </a>
           </div>

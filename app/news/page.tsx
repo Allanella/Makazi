@@ -6,9 +6,9 @@ export const metadata = { title: 'News & stories', description: 'Read verified n
 
 export default function NewsPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" className="fx-page fx-home">
       <PageIntro eyebrow="News & stories" title="Updates from our community." description="Verified news, learning and community stories from MAKAZI Education Initiative." compact />
-      <section className="section"><div className="container"><div className="news-listing-top"><p className="eyebrow"><span /> Latest updates</p><p>We share only verified information and stories with appropriate consent.</p></div><NewsList articles={newsArticles} /></div></section>
+      <section className="section fx-section"><div className="container"><div className="news-listing-top fx-reveal"><p className="eyebrow"><span /> Latest updates</p><p>We share only verified information and stories with appropriate consent.</p></div><NewsList articles={newsArticles} /></div></section>
     </main>
   )
 }

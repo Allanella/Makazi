@@ -1,8 +1,21 @@
 import type { Metadata, Viewport } from 'next'
+import { Fraunces, Manrope } from 'next/font/google'
 import { SiteHeader } from '@/components/site/site-header'
 import { SiteFooter } from '@/components/site/site-footer'
 import { organization } from '@/data/organization'
 import './globals.css'
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')),
@@ -39,7 +52,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" className={`${manrope.variable} ${fraunces.variable}`}>
       <body className="antialiased">
         <a className="skip-link" href="#main-content">Skip to content</a>
         <SiteHeader />

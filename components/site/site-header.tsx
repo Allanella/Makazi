@@ -13,7 +13,6 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  // Add dynamic elevation & backdrop blur on scroll
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
@@ -23,12 +22,10 @@ export function SiteHeader() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setOpen(false)
   }, [pathname])
 
-  // Lock body scroll and allow Escape key to close mobile menu
   useEffect(() => {
     if (!open) return
 
@@ -43,6 +40,27 @@ export function SiteHeader() {
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [open])
+
+  const renderNavLinks = (keyPrefix: string) =>
+    navigation.map((item) => {
+      const isActive =
+        item.href === '/'
+          ? pathname === '/'
+          : pathname?.startsWith(item.href)
+
+      return (
+        <Link
+          key={`${keyPrefix}-${item.href}`}
+          href={item.href}
+          className={`nav-link${isActive ? ' is-active' : ''}`}
+          aria-current={isActive ? 'page' : undefined}
+          onClick={() => setOpen(false)}
+          tabIndex={keyPrefix === 'mobile' && !open ? -1 : undefined}
+        >
+          {item.label}
+        </Link>
+      )
+    })
 
   return (
     <>
@@ -65,7 +83,9 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
+      <header
+        className={`site-header${scrolled ? ' is-scrolled' : ''}${open ? ' is-menu-open' : ''}`}
+      >
         <div className="container nav-inner">
           <Link
             className="brand"
@@ -89,37 +109,8 @@ export function SiteHeader() {
             </span>
           </Link>
 
-          <nav
-            id="main-navigation"
-            className={`main-nav${open ? ' is-open' : ''}`}
-            aria-label="Main navigation"
-          >
-            {navigation.map((item) => {
-              const isActive =
-                item.href === '/'
-                  ? pathname === '/'
-                  : pathname?.startsWith(item.href)
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`nav-link${isActive ? ' is-active' : ''}`}
-                  aria-current={isActive ? 'page' : undefined}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              )
-            })}
-
-            <Link
-              className="nav-support mobile-support"
-              href="/donate"
-              onClick={() => setOpen(false)}
-            >
-              Support our work <ArrowUpRight size={17} aria-hidden="true" />
-            </Link>
+          <nav className="main-nav main-nav-desktop" aria-label="Main navigation">
+            {renderNavLinks('desktop')}
           </nav>
 
           <div className="nav-actions">
@@ -133,7 +124,7 @@ export function SiteHeader() {
               type="button"
               aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={open}
-              aria-controls="main-navigation"
+              aria-controls="mobile-navigation"
               onClick={() => setOpen((value) => !value)}
             >
               {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
@@ -142,7 +133,27 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* Backdrop overlay for mobile menu */}
+      {/* Drawer + backdrop sit outside sticky header so fixed positioning isn't trapped */}
+      <nav
+        id="mobile-navigation"
+        className={`main-nav main-nav-mobile${open ? ' is-open' : ''}`}
+        aria-label="Mobile navigation"
+        aria-hidden={!open}
+      >
+        <div className="mobile-nav-panel">
+          <p className="mobile-nav-label">Explore</p>
+          {renderNavLinks('mobile')}
+          <Link
+            className="nav-support mobile-support"
+            href="/donate"
+            onClick={() => setOpen(false)}
+            tabIndex={open ? 0 : -1}
+          >
+            Support our work <ArrowUpRight size={17} aria-hidden="true" />
+          </Link>
+        </div>
+      </nav>
+
       {open && (
         <div
           className="nav-backdrop"
